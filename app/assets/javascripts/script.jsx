@@ -1,3 +1,5 @@
+// Exercise 1
+
 var Button = React.createClass({
   localHandleClick: function() {
     this.props.localHandleClick(this.props.increment);
@@ -17,7 +19,7 @@ var Result = React.createClass({
   }
 })
 
-var Main = React.createClass({
+var Main1 = React.createClass({
   getInitialState: function() {
     return {counter: 0};
   },
@@ -37,4 +39,58 @@ var Main = React.createClass({
   }
 })
 
-React.render(<Main />, document.getElementById("root"));
+React.render(<Main1 />, document.getElementById("exercise1"));
+
+// Exercise 2
+
+var Card = React.createClass({
+  getInitialState: function(){
+    return{};
+  },
+  componentDidMount: function(){
+    var component = this;
+    $.get("https://api.github.com/users/" + this.props.login, function(data){
+      component.setState(data);
+    });
+  },
+  render: function(){
+    return (
+      <div>
+        <img src={this.state.avatar_url} width="100" />
+        <h3>{this.state.name}</h3>
+        <hr/>
+      </div>
+    );
+  }
+});
+
+var Form = React.createClass({
+  render: function(){
+    return (
+      <form>
+        <input placeholder="github login" />
+        <button>Add</button>
+      </form>
+    );
+  }
+});
+
+var Main2 = React.createClass({
+  getInitialState: function(){
+    return{logins: []};
+  },
+  render: function() {
+    var cards = this.state.logins.map(function(login){
+      return (<Card login={login} />);
+    });
+    return(
+      <div>
+        <Form />
+        {cards}
+
+      </div>
+    )
+  }
+});
+
+React.render(<Main2 />, document.getElementById("exercise2"));
