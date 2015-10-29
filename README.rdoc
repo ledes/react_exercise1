@@ -1,0 +1,3 @@
+## React exercise
+
+React exercise in a ruby on rails app
